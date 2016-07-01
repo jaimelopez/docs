@@ -1,27 +1,29 @@
 var SpecBrowser = {
+    specification: [],
     load: function(url) {
         $.getJSON(url, function(specification) {
-            SpecBrowser.render(specification);
+            SpecBrowser.specification = specification;
             SpecBrowser.jump(document.location.hash.slice(1) || 'services');
         });
     },
-    render: function(specification) {
-        var source   = $("#specification-template").html();
-        var template = Handlebars.compile(source);
-        $("#specification").html(template({specification: specification}));
-    },
     jump: function(to) {
         if (this.isTabName(to)) {
-            this.showTab(to);
+            this.renderTab(to);
         }
     },
     isTabName: function(name) {
         return ['services', 'structures', 'extensions'].indexOf(name) !== false;
     },
-    showTab: function(tab) {
-        $(".specification .tab").hide();
-        $(".specification .tab[data-name="+tab+"]").show();
-        $(".page-tab-bar .tab").removeClass('active');
-        $(".page-tab-bar .tab[data-name="+tab+"]").addClass('active');
+    renderTab: function(tab) {
+        $(".page-tab-bar a[data-active-tab]").removeClass('active');
+        $(".page-tab-bar a[data-active-tab=" + tab.replace( /(:|\.|\[|\]|,)/g, "\\$1" ) +"]").addClass('active');
+
+        this.render(tab + "-navigation", "#navbar");
+        this.render(tab + "-page", "#view");
+    },
+    render: function(view, where) {
+        var source   = $("#"+view+"-template").html();
+        var template = Handlebars.compile(source);
+        $(where).html(template({specification: this.specification}));
     }
 };

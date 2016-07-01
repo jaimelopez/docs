@@ -8,65 +8,148 @@ github_link: specification/index.html
     <div class="container">
         <h1 class="page-heading">{{ page.title }}</h1>
         <div class="page-tab-bar">
-            <a class="tab" data-name="services" href="javascript:SpecBrowser.jump('services')">Services</a>
-            <a class="tab" data-name="structures" href="javascript:SpecBrowser.jump('structures')">Structures</a>
-            <a class="tab" data-name="extensions" href="javascript:SpecBrowser.jump('extensions')">Extensions</a>
+            <a class="tab" data-active-tab="services" href="#services">Services</a>
+            <a class="tab" data-active-tab="structures" href="#structures">Structures</a>
+            <a class="tab" data-active-tab="extensions" href="#extensions">Extensions</a>
         </div>
     </div>
 </section>
-<section class="specification-section">
-    <div class="container">
-        <div class="content-wrap" id="specification">
-            <br>
-            <p>Loading <a href="{{ site.specificationurl }}">{{ site.specificationurl }}</a>...</p>
-        </div>
-    </div>
-</section>
+<div class="container specification">
+    <aside class="sidebar">
+        <div class="sidebar-wrapper" id="navbar"></div>
+    </aside>
+    <section class="content">
+        <div class="content-wrap" id="view"></div>
+    </section>
+</div>
 
 <script src="{{ site.baseurl }}/specification/js/handlebars.js"></script>
 <script src="{{ site.baseurl }}/specification/js/specification_browser.js"></script>
-<script id="specification-template" type="text/x-handlebars-template">
+
+<script id="services-navigation-template" type="text/x-handlebars-template">
     {% raw %}
-    <div class="specification">
-        <div class="tab" data-name="services">
-            {{#each specification}}
-            {{#if services.length}}
-            <h3>{{module}}</h3>
-            <ul>
-                {{#each services}}
-                <li>{{summary}}</li>
-                {{/each}}
-            </ul>
-            {{/if}}
-            {{/each}}
-        </div>
-        <div class="tab" data-name="structures">
-            {{#each specification}}
-            {{#if structures.length}}
-            <h3>{{module}}</h3>
-            <ul>
-                {{#each structures}}
-                <li>{{summary}}</li>
-                {{/each}}
-            </ul>
-            {{/if}}
-            {{/each}}
-        </div>
-        <div class="tab" data-name="extensions">
-            {{#each specification}}
-            {{#if extensions.length}}
-            <h3>{{module}}</h3>
-            <ul>
-                {{#each extensions}}
-                <li>{{summary}}</li>
-                {{/each}}
-            </ul>
-            {{/if}}
-            {{/each}}
-        </div>
-    </div>
+    <ul role="navigation">
+        {{#each specification}}
+        {{#if services.length}}
+        <li class="level1"><span class="nav-header">{{module}}</span></li>
+        {{#each services}}
+        <li class="level-2"><a href="#{{../module}}.{{name}}">{{name}}</a></li>
+        {{/each}}
+        {{/if}}
+        {{/each}}
+    </ul>
     {% endraw %}
 </script>
+
+<script id="services-page-template" type="text/x-handlebars-template">
+    {% raw %}
+    <h2>Services</h2>
+    <table>
+        <thead>
+        <tr>
+            <th>Service</th>
+            <th>Summary</th>
+        </tr>
+        </thead>
+        <tbody>
+        {{#each specification}}
+        {{#each services}}
+        <tr>
+            <td>{{../module}}.{{name}}</td>
+            <td>{{summary}}</td>
+        </tr>
+        {{/each}}
+        {{/each}}
+        </tbody>
+    </table>
+    {% endraw %}
+</script>
+
+<script id="structures-navigation-template" type="text/x-handlebars-template">
+    {% raw %}
+    <ul role="navigation">
+        {{#each specification}}
+        {{#if structures.length}}
+        <li class="level1"><span class="nav-header">{{module}}</span></li>
+        {{#each structures}}
+        <li class="level-2"><a href="#{{../module}}.{{name}}">{{name}}</a></li>
+        {{/each}}
+        {{/if}}
+        {{/each}}
+    </ul>
+    {% endraw %}
+</script>
+
+<script id="structures-page-template" type="text/x-handlebars-template">
+    {% raw %}
+    <h2>Structures</h2>
+    <table>
+        <thead>
+        <tr>
+            <th>Structure</th>
+            <th>Summary</th>
+        </tr>
+        </thead>
+        <tbody>
+        {{#each specification}}
+        {{#each structures}}
+        <tr>
+            <td>{{../module}}.{{name}}</td>
+            <td>{{summary}}</td>
+        </tr>
+        {{/each}}
+        {{/each}}
+        </tbody>
+    </table>
+    {% endraw %}
+</script>
+
+<script id="extensions-navigation-template" type="text/x-handlebars-template">
+    {% raw %}
+    <ul role="navigation">
+        {{#each specification}}
+        {{#if extensions.length}}
+        <li class="level1"><span class="nav-header">{{module}}</span></li>
+        {{#each extensions}}
+        <li class="level-2"><a href="#{{../module}}.{{extends}}.{{name}}">{{name}}</a></li>
+        {{/each}}
+        {{/if}}
+        {{/each}}
+    </ul>
+    {% endraw %}
+</script>
+
+<script id="extensions-page-template" type="text/x-handlebars-template">
+    {% raw %}
+    <h2>Extensions</h2>
+    <table>
+        <thead>
+        <tr>
+            <th>Extension</th>
+            <th>Extends</th>
+            <th>Summary</th>
+        </tr>
+        </thead>
+        <tbody>
+        {{#each specification}}
+        {{#each extensions}}
+        <tr>
+            <td>{{../module}}.{{name}}</td>
+            <td>{{extends}}</td>
+            <td>{{summary}}</td>
+        </tr>
+        {{/each}}
+        {{/each}}
+        </tbody>
+    </table>
+    {% endraw %}
+</script>
+
+
 <script type="application/javascript">
     SpecBrowser.load("{{ site.specificationurl }}");
+
+    $(window).on('hashchange', function () {
+        SpecBrowser.jump(window.location.hash.slice(1));
+    });
 </script>
