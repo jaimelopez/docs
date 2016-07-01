@@ -1,0 +1,33 @@
+{% assign all_nodes = site.pages | where:"group",page.group | group_by:"alt_menu_parent" %}
+<aside class="sidebar">
+    <a href="#" class="toc-toggler">Table of Contents</a>
+    <div class="sidebar-wrapper">
+
+        <ul role="navigation">
+            {% assign one_group = all_nodes | where:"name", "" | first %}
+            {% unless one_group %} {% continue %} {% endunless %}
+            {% assign one_nodes = one_group.items | sort: "menu_order" %}
+
+            {% for one_node in one_nodes %}
+                <li class="level1">
+                    <a class="nav-header" href="{{ site.baseurl}}{{ one_node.url }}">
+                        {% if one_node.menu_title %}{{one_node.menu_title}}{% else%}{{one_node.title}}{% endif %}
+                    </a>
+                </li>
+
+                {% assign two_groupx = all_nodes | where:"name",one_node.url %}
+                {% assign two_group = two_groupx | first %}
+                {% unless two_group %} {% continue %} {% endunless %}
+                {% assign two_nodes = two_group.items | sort: "menu_order" %}
+
+                {% for two_node in two_nodes %}
+                    <li class="level-2">
+                        <a href="{{ site.baseurl}}{{ two_node.url }}">
+                            {% if two_node.menu_title %}{{two_node.menu_title}}{% else%}{{two_node.title}}{% endif %}
+                        </a>
+                    </li>
+                {% endfor %}
+            {% endfor %}
+        </ul>
+    </div>
+</aside>

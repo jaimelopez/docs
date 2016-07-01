@@ -1,0 +1,11 @@
+encoding: "utf-8"
+title: Magento Commerce Order Management Documentation
+email: mailto:skolodyazhnyy@magento.com
+description: Magento Commerce Order Management
+baseurl: "/docs"
+markdown_ext: "markdown,mkdown,mkdn,mkd,md"
+markdown: kramdown
+highlighter: rouge
+incremental: true
+exclude: ['scss','bin','node_modules']
+githuburl: https://github.com/magento-mcom/docs/tree/master/
