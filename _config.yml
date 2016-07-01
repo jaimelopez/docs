@@ -9,3 +9,4 @@ highlighter: rouge
 incremental: true
 exclude: ['scss','bin','node_modules']
 githuburl: https://github.com/magento-mcom/docs/tree/gh-pages/
+specificationurl: https://magento-mcom.github.io/shared-services-internal/specification.json

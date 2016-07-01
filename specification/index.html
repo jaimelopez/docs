@@ -1,0 +1,70 @@
+---
+layout: specification
+title: Specification
+github_link: specification/index.html
+---
+
+<section class="specification-section">
+    <div class="container">
+        <div class="content-wrap" id="specification"></div>
+        </div>
+    </div>
+</section>
+
+<script src="{{ site.baseurl }}/specification/js/handlebars.js"></script>
+
+<script id="specification-template" type="text/x-handlebars-template">
+{% raw %}
+    {{#each specification}}
+    <div class="entry">
+        <h3>{{module}}</h3>
+        <ul>
+            {{#each services}}
+                <li>
+                    <b>Service {{name}}</b>
+                    <ul>
+                    {{#each commands}}
+                        <li>Command {{name}}</li>
+                    {{/each}}
+                    {{#each queries}}
+                        <li>Query {{name}}</li>
+                    {{/each}}
+                    {{#each events}}
+                        <li>Event {{name}}</li>
+                    {{/each}}
+                    </ul>
+                </li>
+            {{/each}}
+            {{#each structures}}
+                <li>
+                    <b>Structure {{name}}</b>
+                    <ul>
+                        {{#each properties}}
+                        <li>{{type}} {{name}}</li>
+                        {{/each}}
+                    </ul>
+                </li>
+            {{/each}}
+            {{#each extensions}}
+                <li>
+                    <b>Extension {{name}}</b>
+                    <ul>
+                        {{#each properties}}
+                        <li>{{type}} {{name}}</li>
+                        {{/each}}
+                    </ul>
+                </li>
+            {{/each}}
+        </ul>
+    </div>
+    {{/each}}
+{% endraw %}
+</script>
+
+<script type="application/javascript">
+    $.getJSON("{{ site.specificationurl }}", function(data) {
+        var source   = $("#specification-template").html();
+        var template = Handlebars.compile(source);
+        $("#specification").html(template({specification: data}));
+    });
+</script>
