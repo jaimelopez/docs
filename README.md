@@ -2,32 +2,30 @@
 
 This repository contains documentation for Magento Commerce Order Management.
 
-# Build this site using Jekyll
+## Contributing
 
 You build website locally using [Jekyll][jekyll] to see how things look like before committing change. 
 
-## Mac OS X prerequisites
+### Build website locally
 
-El Capitan and later versions of Mac OS X require additional steps prior to installation due to security improvements.
+Install [bundler][bundler] and [jekyll](https://jekyllrb.com/docs/installation/). Then simply go to the root of the repository and run jekyll:
 
-Change to the repository root directory and enter the following commands to install and run Jekyll:
-
-```bash
-# Install Bundler into /usr/local/bin directory instead of protected /usr/bin
-$ sudo gem install bundler -n /usr/local/bin
+```
+$ bundler exec jekyll serve
 ```
 
-# Build this site
+It will start jekyll webserver which will serve statically generated website at http://localhost:4000. Jekyll will watch files and regenerate website every time when there is a change.
 
-To build this site using Jekyll:
+### Compile stylesheets
 
-```bash
-# Install dependencies
-$ bundle install
+Look and feel of the website is build using SCSS files from `theme/scss`. These are complied into CSS files using [Gulp][gulp] task.
 
-# Visit http://localhost:4000 in your favorite browser!
-$ bin/jekyll serve
+In case you want to update website theme install [gulp-cli](https://github.com/gulpjs/gulp/blob/master/docs/getting-started.md) and run:
+
+```
+$ gulp styles
 ```
 
 [jekyll]: https://jekyllrb.com
-
+[bundler]: http://bundler.io/
+[gulp]: http://gulpjs.com/
