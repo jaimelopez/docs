@@ -1,0 +1,26 @@
+.page-tab-bar {
+  position: relative;
+  bottom: -40px;
+  display: flex;
+}
+
+.page-tab-bar a.tab {
+  color: white;
+  padding: 10px 25px;
+  margin-right: 1px;
+  display: block;
+  text-decoration: none;
+}
+
+.page-tab-bar a.tab:hover,
+.page-tab-bar a.tab:focus {
+  color: white;
+}
+
+.page-tab-bar a.tab.active {
+  background: #ff7c35;
+}
+
+.specification .tab {
+  display: none;
+}

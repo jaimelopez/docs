@@ -19,7 +19,6 @@ var gulp = require('gulp'),
     rename = require('gulp-rename'),
     del = require('del'),
     include = require('gulp-include'),
-    jekyll = require('gulp-jekyll'),
     spawn = require('child_process').spawn,
     exec = require('child_process').exec,
     consolidate = require('gulp-consolidate'),
@@ -132,22 +131,6 @@ gulp.task('styles', function () {
 
 });
 
-// Compile html files. Use _config.yml
-gulp.task('jekyll', function (gulpCallBack) {
-
-    var jekyll = spawn('bundle', ['exec', 'jekyll', 'build'], {stdio: 'inherit'});
-
-    jekyll.on('error', function (error) {
-        console.log(error.toString());
-        this.emit('end');
-    });
-
-    jekyll.on('close', function () {
-        browsersync.reload();
-        gulpCallBack();
-    });
-});
-
 gulp.task('browser-sync', function () {
     browsersync(bsconfig);
 });
@@ -155,7 +138,6 @@ gulp.task('browser-sync', function () {
 // Rerun the task when a file changes
 gulp.task('watch', function () {
     browsersync(bsconfig);
-    gulp.watch(paths.html, ['jekyll']);
     gulp.watch(paths.scripts, ['scripts']);
     gulp.watch(paths.images, ['images']);
     gulp.watch(paths.styles, ['styles']);

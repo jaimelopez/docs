@@ -1,9 +1,19 @@
 ---
-layout: specification
+layout: home
 title: Specification
 github_link: specification/index.html
 ---
 
+<section class="page-intro">
+    <div class="container">
+        <h1 class="page-heading">{{ page.title }}</h1>
+        <div class="page-tab-bar">
+            <a class="tab" data-name="services" href="javascript:SpecBrowser.jump('services')">Services</a>
+            <a class="tab" data-name="structures" href="javascript:SpecBrowser.jump('structures')">Structures</a>
+            <a class="tab" data-name="extensions" href="javascript:SpecBrowser.jump('extensions')">Extensions</a>
+        </div>
+    </div>
+</section>
 <section class="specification-section">
     <div class="container">
         <div class="content-wrap" id="specification">
@@ -14,59 +24,49 @@ github_link: specification/index.html
 </section>
 
 <script src="{{ site.baseurl }}/specification/js/handlebars.js"></script>
-
+<script src="{{ site.baseurl }}/specification/js/specification_browser.js"></script>
 <script id="specification-template" type="text/x-handlebars-template">
-{% raw %}
-    {{#each specification}}
-    <div class="entry">
-        <h3>{{module}}</h3>
-        <ul>
-            {{#each services}}
-                <li>
-                    <b>Service {{name}}</b>
-                    <ul>
-                    {{#each commands}}
-                        <li>Command {{name}}</li>
-                    {{/each}}
-                    {{#each queries}}
-                        <li>Query {{name}}</li>
-                    {{/each}}
-                    {{#each events}}
-                        <li>Event {{name}}</li>
-                    {{/each}}
-                    </ul>
-                </li>
+    {% raw %}
+    <div class="specification">
+        <div class="tab" data-name="services">
+            {{#each specification}}
+            {{#if services.length}}
+            <h3>{{module}}</h3>
+            <ul>
+                {{#each services}}
+                <li>{{summary}}</li>
+                {{/each}}
+            </ul>
+            {{/if}}
             {{/each}}
-            {{#each structures}}
-                <li>
-                    <b>Structure {{name}}</b>
-                    <ul>
-                        {{#each properties}}
-                        <li>{{type}} {{name}}</li>
-                        {{/each}}
-                    </ul>
-                </li>
+        </div>
+        <div class="tab" data-name="structures">
+            {{#each specification}}
+            {{#if structures.length}}
+            <h3>{{module}}</h3>
+            <ul>
+                {{#each structures}}
+                <li>{{summary}}</li>
+                {{/each}}
+            </ul>
+            {{/if}}
             {{/each}}
-            {{#each extensions}}
-                <li>
-                    <b>Extension {{name}}</b>
-                    <ul>
-                        {{#each properties}}
-                        <li>{{type}} {{name}}</li>
-                        {{/each}}
-                    </ul>
-                </li>
+        </div>
+        <div class="tab" data-name="extensions">
+            {{#each specification}}
+            {{#if extensions.length}}
+            <h3>{{module}}</h3>
+            <ul>
+                {{#each extensions}}
+                <li>{{summary}}</li>
+                {{/each}}
+            </ul>
+            {{/if}}
             {{/each}}
-        </ul>
+        </div>
     </div>
-    {{/each}}
-{% endraw %}
+    {% endraw %}
 </script>
-
 <script type="application/javascript">
-    $.getJSON("{{ site.specificationurl }}", function(data) {
-        var source   = $("#specification-template").html();
-        var template = Handlebars.compile(source);
-        $("#specification").html(template({specification: data}));
-    });
+    SpecBrowser.load("{{ site.specificationurl }}");
 </script>
