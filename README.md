@@ -1,4 +1,4 @@
-# Magento Commerce Order Management Documentation
+# MCOM Documentation
 
 This repository contains documentation for Magento Commerce Order Management.
 
