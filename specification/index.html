@@ -41,7 +41,7 @@ github_link: specification/index.html
     {% endraw %}
 </script>
 
-<script id="services-page-template" type="text/x-handlebars-template">
+<script id="services-index-template" type="text/x-handlebars-template">
     {% raw %}
     <h2>Services</h2>
     <table>
@@ -55,13 +55,66 @@ github_link: specification/index.html
         {{#each specification}}
         {{#each services}}
         <tr>
-            <td>{{../module}}.{{name}}</td>
+            <td><a href="#{{../module}}.{{name}}">{{../module}}.{{name}}</a></td>
             <td>{{summary}}</td>
         </tr>
         {{/each}}
         {{/each}}
         </tbody>
     </table>
+    {% endraw %}
+</script>
+
+<script id="services-page-template" type="text/x-handlebars-template">
+    {% raw %}
+    <h2>{{ element.summary }} <small>{{module}}.{{element.name}}</small></h2>
+    
+    <p>{{ element.description }}</p>
+
+    {{#if element.queries}}
+    <h3>Queries</h3>
+    {{#each element.queries }}
+        {{> interaction type="query" }}
+    {{/each}}
+    {{/if}}
+
+    {{#if element.commands }}
+    <h3>Commands</h3>
+    {{#each element.commands }}
+        {{> interaction type="command" }}
+    {{/each}}
+    {{/if}}
+
+    {{#if element.events }}
+    <h3>Events</h3>
+    {{#each element.events }}
+        {{> interaction type="event" }}
+    {{/each}}
+    {{/if}}
+    {% endraw %}
+</script>
+
+<script id="interaction-template" type="text/x-handlebars-template">
+    {% raw %}
+    <div style="background: #e1d2b4;margin-bottom: 20px;">
+        <div style="padding: 10px"><b>{{name}}</b></div>
+        <div class="" style="padding: 10px; border: 1px solid #e1d2b4;background: #f7f3eb;">
+            <p>{{summary}}</p>
+            <p>{{description}}</p>
+            {{#if arguments.length }}
+            <p style="font-weight: bold">Arguments</p>
+            <ul>
+                {{#each arguments}}
+                <li>{{type type}} <span class="property-name">{{name}}</span> - {{summary}}</li>
+                {{/each}}
+            </ul>
+            {{/if}}
+            {{#if returns }}
+            <p style="font-weight: bold">Returns</p>
+            {{type returns}}
+            {{/if}}
+        </div>
+    </div>
     {% endraw %}
 </script>
 
@@ -80,7 +133,7 @@ github_link: specification/index.html
     {% endraw %}
 </script>
 
-<script id="structures-page-template" type="text/x-handlebars-template">
+<script id="structures-index-template" type="text/x-handlebars-template">
     {% raw %}
     <h2>Structures</h2>
     <table>
@@ -94,13 +147,26 @@ github_link: specification/index.html
         {{#each specification}}
         {{#each structures}}
         <tr>
-            <td>{{../module}}.{{name}}</td>
+            <td><a href="#{{../module}}.{{name}}">{{../module}}.{{name}}</a></td>
             <td>{{summary}}</td>
         </tr>
         {{/each}}
         {{/each}}
         </tbody>
     </table>
+    {% endraw %}
+</script>
+
+<script id="structures-page-template" type="text/x-handlebars-template">
+    {% raw %}
+    <h2>{{element.summary}} <small>{{module}}.{{element.name}}</small></h2>
+    <p>{{element.description}}</p>
+    <h3>Properties</h3>
+    <ul>
+        {{#each element.properties}}
+            <li>{{type type}} <span class="property-name">{{name}}</span> - {{summary}}</li>
+        {{/each}}
+    </ul>
     {% endraw %}
 </script>
 
@@ -119,7 +185,7 @@ github_link: specification/index.html
     {% endraw %}
 </script>
 
-<script id="extensions-page-template" type="text/x-handlebars-template">
+<script id="extensions-index-template" type="text/x-handlebars-template">
     {% raw %}
     <h2>Extensions</h2>
     <table>
@@ -134,7 +200,7 @@ github_link: specification/index.html
         {{#each specification}}
         {{#each extensions}}
         <tr>
-            <td>{{../module}}.{{name}}</td>
+            <td><a href="#{{../module}}.{{extends}}.{{name}}">{{name}}</a></td>
             <td>{{extends}}</td>
             <td>{{summary}}</td>
         </tr>
@@ -145,10 +211,46 @@ github_link: specification/index.html
     {% endraw %}
 </script>
 
+<script id="extensions-page-template" type="text/x-handlebars-template">
+    {% raw %}
+    <h2>{{element.summary}} <small>{{module}}.{{element.extends}}.{{element.name}}</small></h2>
+    <p>{{element.description}}</p>
+    <h3>Properties</h3>
+    <ul>
+        {{#each element.properties}}
+        <li>{{type type}} <span class="property-name">{{name}}</span> - {{summary}}</li>
+        {{/each}}
+    </ul>
+    {% endraw %}
+</script>
 
 <script type="application/javascript">
-    SpecBrowser.load("{{ site.specificationurl }}");
+    Handlebars.registerHelper('type', function(type) {
+        var typeRenderer = function(type) {
+            var genericMatcher = /^([a-z_]+)\[(.+)\]$/;
+            
+            if (genericMatcher.test(type)) {
+                var matches = genericMatcher.exec(type);
 
+                return matches[1] + '[' + typeRenderer(matches[2]) + ']';
+            }
+
+            if (type.indexOf('.') != -1) {
+                var name = type.split('.').pop();
+                
+                return '<a href="#'+type+'" class="data-type">' + name + '</a>';
+            }
+
+            return type;
+        };
+
+        return new Handlebars.SafeString('<span class="data-type">' + typeRenderer(type) + '</span>');
+    });
+
+    Handlebars.registerPartial('interaction', $("#interaction-template").html());
+    
+    SpecBrowser.fetch("{{ site.specificationurl }}");
+    
     $(window).on('hashchange', function () {
         SpecBrowser.jump(window.location.hash.slice(1));
     });
