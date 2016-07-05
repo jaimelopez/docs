@@ -25,6 +25,7 @@ github_link: specification/index.html
 
 <script src="{{ site.baseurl }}/specification/js/handlebars.js"></script>
 <script src="{{ site.baseurl }}/specification/js/specification_browser.js"></script>
+<script src="{{ site.baseurl }}/specification/js/jquery.bonsai.js"></script>
 
 <script id="services-navigation-template" type="text/x-handlebars-template">
     {% raw %}
@@ -103,15 +104,11 @@ github_link: specification/index.html
             <p>{{description}}</p>
             {{#if arguments.length }}
             <p style="font-weight: bold">Arguments</p>
-            <ul>
-                {{#each arguments}}
-                <li>{{type type}} <span class="property-name">{{name}}</span> - {{summary}}</li>
-                {{/each}}
-            </ul>
+            {{> type-tree properties=arguments className="arguments" }}
             {{/if}}
             {{#if returns }}
             <p style="font-weight: bold">Returns</p>
-            {{type returns}}
+            {{ type returns }}
             {{/if}}
         </div>
     </div>
@@ -162,11 +159,7 @@ github_link: specification/index.html
     <h2>{{element.summary}} <small>{{module}}.{{element.name}}</small></h2>
     <p>{{element.description}}</p>
     <h3>Properties</h3>
-    <ul>
-        {{#each element.properties}}
-            <li>{{type type}} <span class="property-name">{{name}}</span> - {{summary}}</li>
-        {{/each}}
-    </ul>
+    {{> type-tree properties=element.properties className="arguments" }}
     {% endraw %}
 </script>
 
@@ -216,28 +209,35 @@ github_link: specification/index.html
     <h2>{{element.summary}} <small>{{module}}.{{element.extends}}.{{element.name}}</small></h2>
     <p>{{element.description}}</p>
     <h3>Properties</h3>
-    <ul>
-        {{#each element.properties}}
-        <li>{{type type}} <span class="property-name">{{name}}</span> - {{summary}}</li>
+    {{> type-tree properties=element.properties className="arguments" }}
+    {% endraw %}
+</script>
+
+<script id="arguments-template" type="text/x-handlebars-template">
+    {% raw %}
+    <ul class="{{className}}">
+        {{#each properties}}
+        <li>
+            <div><span class="property-name">{{name}}</span> ({{type type}}) - {{summary}}</div>
+            {{type-tree type}}
+        </li>
         {{/each}}
     </ul>
     {% endraw %}
 </script>
 
 <script type="application/javascript">
+    var genericMatcher = /^([a-z_]+)\[(.+)\]$/;
+    
     Handlebars.registerHelper('type', function(type) {
         var typeRenderer = function(type) {
-            var genericMatcher = /^([a-z_]+)\[(.+)\]$/;
-            
             if (genericMatcher.test(type)) {
                 var matches = genericMatcher.exec(type);
-
                 return matches[1] + '[' + typeRenderer(matches[2]) + ']';
             }
 
             if (type.indexOf('.') != -1) {
                 var name = type.split('.').pop();
-                
                 return '<a href="#'+type+'" class="data-type">' + name + '</a>';
             }
 
@@ -246,8 +246,33 @@ github_link: specification/index.html
 
         return new Handlebars.SafeString('<span class="data-type">' + typeRenderer(type) + '</span>');
     });
+    Handlebars.registerHelper('type-tree', function(type) {
+        var argumentsRenderer = function(type) {
+            if (genericMatcher.test(type)) {
+                var matches = genericMatcher.exec(type);
+                return argumentsRenderer(matches[2]);
+            }
 
+            if (!SpecBrowser.index.hasOwnProperty(type)) {
+                return null;
+            }
+
+            var element = SpecBrowser.index[type];
+
+            if (element.type != 'structure') {
+                return null;
+            }
+
+            var source   = $("#arguments-template").html();
+            var template = Handlebars.compile(source);
+
+            return new Handlebars.SafeString(template({properties: element.document.properties}));
+        };
+        
+        return argumentsRenderer(type);
+    });
     Handlebars.registerPartial('interaction', $("#interaction-template").html());
+    Handlebars.registerPartial('type-tree', $("#arguments-template").html());
     
     SpecBrowser.fetch("{{ site.specificationurl }}");
     

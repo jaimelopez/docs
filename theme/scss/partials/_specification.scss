@@ -32,3 +32,57 @@
   font-weight: bold;
   border-bottom: 1px dotted #666666;
 }
+
+.specification ul.arguments li {
+  margin: 0;
+}
+
+.specification ul.arguments li > div {
+  margin-top: 0.3em;
+  margin-bottom: 0.3em;
+}
+
+.bonsai,
+.bonsai li {
+  margin: 0;
+  padding: 0;
+  list-style: none;
+  overflow: hidden;
+}
+
+.bonsai li {
+  position: relative;
+  padding-left: 1.3em; /* padding for the thumb */
+}
+
+li .thumb {
+  margin: -1px 0 0 -1em; /* negative margin into the padding of the li */
+  position: absolute;
+  cursor: pointer;
+}
+
+li > .thumb:after {
+  content: '▪';
+  color: #DDDDDD;
+}
+
+li.has-children > .thumb:after {
+  content: '▸';
+  color: black;
+}
+
+li.has-children.expanded > .thumb:after {
+  content: '▾';
+  color: black;
+}
+
+li.collapsed > ol.bonsai {
+  height: 0;
+  overflow: hidden;
+}
+
+.bonsai .all,
+.bonsai .none {
+  cursor: pointer;
+}
+

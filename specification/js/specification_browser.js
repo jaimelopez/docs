@@ -50,14 +50,15 @@ var SpecBrowser = {
     },
     jump: function(to) {
         if (this.isSectionName(to)) {
-            return this.renderIndex(to);
-        }
-
+            this.renderIndex(to);
+        } else
         if (this.isElementName(to)) {
-            return this.renderElement(to);
+            this.renderElement(to);
+        } else {
+            return this.jump('services');
         }
 
-        return this.jump('services');
+        this.updateBindings();
     },
     isSectionName: function(name) {
         return ['services', 'structures', 'extensions'].indexOf(name) != -1;
@@ -92,5 +93,8 @@ var SpecBrowser = {
         context.specification = this.specification;
 
         $(where).html(template(context));
+    },
+    updateBindings: function() {
+        $(".specification .arguments").bonsai();
     }
 };
