@@ -26,6 +26,7 @@ github_link: specification/index.html
 <script src="{{ site.baseurl }}/specification/js/handlebars.js"></script>
 <script src="{{ site.baseurl }}/specification/js/specification_browser.js"></script>
 <script src="{{ site.baseurl }}/specification/js/jquery.bonsai.js"></script>
+<script src="{{ site.baseurl }}/specification/js/jquery.modal.js"></script>
 
 <script id="services-navigation-template" type="text/x-handlebars-template">
     {% raw %}
@@ -75,21 +76,21 @@ github_link: specification/index.html
     {{#if element.queries}}
     <h3>Queries</h3>
     {{#each element.queries }}
-        {{> interaction type="query" }}
+        {{> interaction type="query" module=../module service=../element.name }}
     {{/each}}
     {{/if}}
 
     {{#if element.commands }}
     <h3>Commands</h3>
     {{#each element.commands }}
-        {{> interaction type="command" }}
+        {{> interaction type="command" module=../module service=../element.name }}
     {{/each}}
     {{/if}}
 
     {{#if element.events }}
     <h3>Events</h3>
     {{#each element.events }}
-        {{> interaction type="event" }}
+        {{> interaction type="event" module=../module service=../element.name }}
     {{/each}}
     {{/if}}
     {% endraw %}
@@ -103,13 +104,16 @@ github_link: specification/index.html
             <p>{{summary}}</p>
             <p>{{description}}</p>
             {{#if arguments.length }}
-            <p style="font-weight: bold">Arguments</p>
+            <p style="font-weight: bold">Arguments <small>[<a rel="modal:open" href="#{{name}}-request">Show Example</a>]</small></p>
             {{> type-tree properties=arguments className="arguments" }}
             {{/if}}
             {{#if returns }}
             <p style="font-weight: bold">Returns</p>
             {{ type returns }}
             {{/if}}
+        </div>
+        <div id="{{name}}-request" style="display:none;">
+            <pre class="example">{{ payload-example arguments }}</pre>
         </div>
     </div>
     {% endraw %}
@@ -246,6 +250,7 @@ github_link: specification/index.html
 
         return new Handlebars.SafeString('<span class="data-type">' + typeRenderer(type) + '</span>');
     });
+
     Handlebars.registerHelper('type-tree', function(type) {
         var argumentsRenderer = function(type) {
             if (genericMatcher.test(type)) {
@@ -271,6 +276,48 @@ github_link: specification/index.html
         
         return argumentsRenderer(type);
     });
+    
+    Handlebars.registerHelper('payload-example', function(properties) {
+        var exemplify = function(type) {
+            if (genericMatcher.test(type)) {
+                var matches = genericMatcher.exec(type);
+                if (matches[1] == 'map') {
+                    return {"key": exemplify(matches[2])};
+                }
+                
+                return [exemplify(matches[2])];
+            }
+
+            if (!SpecBrowser.index.hasOwnProperty(type)) {
+                return type;
+            }
+
+            var element = SpecBrowser.index[type];
+
+            if (element.type != 'structure') {
+                return type;
+            }
+            
+            var example = {};
+
+            for (var p = 0; p < element.document.properties.length; p++) {
+                var property = element.document.properties[p];
+                
+                example[property.name] = exemplify(property.type);
+            }
+            
+            return example;
+        };
+
+        var example = {};
+
+        for (var i = 0; i < properties.length; i++) {
+            example[properties[i].name] = exemplify(properties[i].type);
+        }
+
+        return JSON.stringify(example, null, 2);
+    });
+    
     Handlebars.registerPartial('interaction', $("#interaction-template").html());
     Handlebars.registerPartial('type-tree', $("#arguments-template").html());
     

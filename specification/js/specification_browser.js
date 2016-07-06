@@ -3,7 +3,7 @@ var SpecBrowser = {
     fetch: function(url) {
         $.getJSON(url, function(specification) {
             SpecBrowser.load(specification);
-            SpecBrowser.jump(document.location.hash.slice(1) || 'services');
+            SpecBrowser.jump(window.location.hash.slice(1) || 'services');
         });
     },
     load: function(specification) {
