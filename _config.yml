@@ -2,7 +2,7 @@ encoding: "utf-8"
 title: Magento Commerce Order Management Documentation
 email: mailto:skolodyazhnyy@magento.com
 description: Magento Commerce Order Management
-baseurl: ""
+baseurl: "/docs"
 markdown_ext: "markdown,mkdown,mkdn,mkd,md"
 markdown: kramdown
 highlighter: rouge
