@@ -274,7 +274,7 @@ github_link: specification/index.html
             }
 
             var source   = $("#arguments-template").html();
-            var template = Handlebars.compile(source);
+            var template = Handlebars.compile(source, {preventIndent: false});
 
             return new Handlebars.SafeString(template({properties: element.document.properties}));
         };
@@ -324,7 +324,7 @@ github_link: specification/index.html
             example[properties[i].name] = exemplify(properties[i].type);
         }
 
-        return JSON.stringify(example, null, 2);
+        return JSON.stringify(example, null, "  ");
     });
     
     Handlebars.registerPartial('interaction', $("#interaction-template").html());

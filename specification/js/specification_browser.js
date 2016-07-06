@@ -87,7 +87,7 @@ var SpecBrowser = {
     },
     render: function(view, where, args) {
         var source   = $("#"+view+"-template").html();
-        var template = Handlebars.compile(source);
+        var template = Handlebars.compile(source, {preventIndent: true});
         var context = args || {};
 
         context.specification = this.specification;
