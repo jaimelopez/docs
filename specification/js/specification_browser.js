@@ -58,6 +58,7 @@ var SpecBrowser = {
             return this.jump('services');
         }
 
+        $("html, body").animate({ scrollTop: $("h1:first-child").offset().top - 10 });
         this.updateBindings();
     },
     isSectionName: function(name) {
