@@ -108,13 +108,18 @@ github_link: specification/index.html
             {{> type-tree properties=arguments className="arguments" }}
             {{/if}}
             {{#if returns }}
-            <p style="font-weight: bold">Returns</p>
+            <p style="font-weight: bold">Returns <small>[<a rel="modal:open" href="#{{name}}-response">Show Example</a>]</small></p>
             {{ type returns }}
             {{/if}}
         </div>
         <div id="{{name}}-request" style="display:none;">
             <pre class="example">{{ payload-example arguments }}</pre>
         </div>
+        {{#if returns }}
+        <div id="{{name}}-response" style="display:none;">
+            <pre class="example">{{ payload-example returns }}</pre>
+        </div>
+        {{/if}}
     </div>
     {% endraw %}
 </script>
@@ -309,6 +314,10 @@ github_link: specification/index.html
             return example;
         };
 
+        if (typeof properties == "string") {
+            return JSON.stringify(exemplify(properties), null, 2)
+        }
+        
         var example = {};
 
         for (var i = 0; i < properties.length; i++) {
