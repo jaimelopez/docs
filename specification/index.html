@@ -255,7 +255,6 @@ github_link: specification/index.html
 
         return new Handlebars.SafeString('<span class="data-type">' + typeRenderer(type) + '</span>');
     });
-
     Handlebars.registerHelper('type-tree', function(type, used) {
         used = used || {};
 
@@ -286,7 +285,6 @@ github_link: specification/index.html
 
         return argumentsRenderer(type);
     });
-
     Handlebars.registerHelper('payload-example', function(properties) {
         var exemplify = function(type, used) {
             used = used || {};
@@ -296,8 +294,31 @@ github_link: specification/index.html
                 var matches = genericMatcher.exec(type);
                 var subtype = matches[2];
 
-                if (matches[1] == 'map') {
-                    return used.hasOwnProperty(subtype) ? {} : {"key": exemplify(subtype, use)};
+                switch (matches[1]) {
+                    case 'map':
+                        return used.hasOwnProperty(subtype) ? {} : {"key": exemplify(subtype, use)};
+                    case 'by_channel':
+                        return used.hasOwnProperty(subtype) ? [] : [
+                            {
+                                "channel": "website",
+                                "value": exemplify(subtype, use)
+                            }
+                        ];
+                    case 'by_locale':
+                        return used.hasOwnProperty(subtype) ? [] : [
+                            {
+                                "locale": "en-US",
+                                "value": exemplify(subtype, use)
+                            }
+                        ];
+                    case 'by_locale_and_channel':
+                        return used.hasOwnProperty(subtype) ? [] : [
+                            {
+                                "locale": "en-US",
+                                "channel": "website",
+                                "value": exemplify(subtype, use)
+                            }
+                        ];
                 }
 
                 return used.hasOwnProperty(subtype) ? [] : [exemplify(subtype, use)];
