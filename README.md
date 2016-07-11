@@ -14,7 +14,7 @@ Install [bundler][bundler] and [jekyll](https://jekyllrb.com/docs/installation/)
 $ bundler exec jekyll serve
 ```
 
-It will start jekyll webserver which will serve statically generated website at [http://localhost:4000/docs](http://localhost:4000/docs). Jekyll will watch files and regenerate website every time when there is a change.
+It will start jekyll webserver which will serve statically generated website at [http://localhost:4000/docs/](http://localhost:4000/docs/). Jekyll will watch files and regenerate website every time when there is a change.
 
 ### Compile stylesheets
 
