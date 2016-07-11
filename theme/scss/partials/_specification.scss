@@ -169,3 +169,18 @@ li.collapsed > ol.bonsai {
   border-radius: 8px;
 }
 
+.interaction {
+  background: #e1d2b4;
+  margin-bottom: 20px;
+}
+
+.interaction .interaction-title {
+  font-weight: bold;
+  padding: 10px;
+}
+
+.interaction .interaction-body {
+  padding: 10px;
+  border: 1px solid #e1d2b4;
+  background: #f7f3eb;
+}

@@ -98,17 +98,17 @@ github_link: specification/index.html
 
 <script id="interaction-template" type="text/x-handlebars-template">
     {% raw %}
-    <div style="background: #e1d2b4;margin-bottom: 20px;">
-        <div style="padding: 10px"><b>{{name}}</b></div>
-        <div class="" style="padding: 10px; border: 1px solid #e1d2b4;background: #f7f3eb;">
+    <div class="interaction">
+        <div class="interaction-title"><b>{{name}}</b></div>
+        <div class="interaction-body">
             <p>{{summary}}</p>
             <p>{{description}}</p>
             {{#if arguments.length }}
-            <p style="font-weight: bold">Arguments <small>[<a rel="modal:open" href="#{{name}}-request">Show Example</a>]</small></p>
+            <h5>Arguments <small>&mdash; <a rel="modal:open" href="#{{name}}-request">show example</a></small></h5>
             {{> type-tree properties=arguments className="arguments" }}
             {{/if}}
             {{#if returns }}
-            <p style="font-weight: bold">Returns <small>[<a rel="modal:open" href="#{{name}}-response">Show Example</a>]</small></p>
+            <h5>Returns <small>&mdash; <a rel="modal:open" href="#{{name}}-response">show example</a></small></h5>
             {{ type returns }}
             {{/if}}
         </div>
@@ -228,7 +228,7 @@ github_link: specification/index.html
         {{#each properties}}
         <li>
             <div><span class="property-name">{{name}}</span> ({{type type}}) - {{summary}}</div>
-            {{type-tree type}}
+            {{ type-tree type ../used }}
         </li>
         {{/each}}
     </ul>
@@ -256,7 +256,9 @@ github_link: specification/index.html
         return new Handlebars.SafeString('<span class="data-type">' + typeRenderer(type) + '</span>');
     });
 
-    Handlebars.registerHelper('type-tree', function(type) {
+    Handlebars.registerHelper('type-tree', function(type, used) {
+        used = used || {};
+
         var argumentsRenderer = function(type) {
             if (genericMatcher.test(type)) {
                 var matches = genericMatcher.exec(type);
@@ -269,28 +271,36 @@ github_link: specification/index.html
 
             var element = SpecBrowser.index[type];
 
-            if (element.type != 'structure') {
+            if (element.type != 'structure' || used.hasOwnProperty(type)) {
                 return null;
             }
 
             var source   = $("#arguments-template").html();
             var template = Handlebars.compile(source, {preventIndent: false});
+            var use = $.extend({}, used);
 
-            return new Handlebars.SafeString(template({properties: element.document.properties}));
+            use[type] = true;
+
+            return new Handlebars.SafeString(template({properties: element.document.properties, used: use}));
         };
-        
+
         return argumentsRenderer(type);
     });
-    
+
     Handlebars.registerHelper('payload-example', function(properties) {
-        var exemplify = function(type) {
+        var exemplify = function(type, used) {
+            used = used || {};
+            var use = $.extend({}, used);
+
             if (genericMatcher.test(type)) {
                 var matches = genericMatcher.exec(type);
+                var subtype = matches[2];
+
                 if (matches[1] == 'map') {
-                    return {"key": exemplify(matches[2])};
+                    return used.hasOwnProperty(subtype) ? {} : {"key": exemplify(subtype, use)};
                 }
-                
-                return [exemplify(matches[2])];
+
+                return used.hasOwnProperty(subtype) ? [] : [exemplify(subtype, use)];
             }
 
             if (!SpecBrowser.index.hasOwnProperty(type)) {
@@ -302,13 +312,19 @@ github_link: specification/index.html
             if (element.type != 'structure') {
                 return type;
             }
+
+            use[type] = true;
+
+            if (used.hasOwnProperty(type)) {
+                return null;
+            }
             
             var example = {};
 
             for (var p = 0; p < element.document.properties.length; p++) {
                 var property = element.document.properties[p];
                 
-                example[property.name] = exemplify(property.type);
+                example[property.name] = exemplify(property.type, use);
             }
             
             return example;
