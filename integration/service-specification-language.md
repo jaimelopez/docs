@@ -4,7 +4,7 @@ title: Service Specification
 menu_title: Specification Language
 menu_order: 2
 group: integration
-github_link: integration/index.md
+github_link: integration/service-specification-language.md
 ---
 
 ## Introduction
@@ -50,9 +50,11 @@ The following simple types are supported:
 - `integer`: A signed integer number such as “34” or “-43”.
 - `float`: A signed floating point number.
 - `boolean`: "1" for true or "0" for false.
-- `datetime`: Date/time in ISO-8601 format.
-- `date`: Date in ISO-8601 format.
+- `datetime`: Date/time in ISO-8601* format.
+- `date`: Date in ISO-8601* format.
 - `blob`: Base64 encoded 8-bit binary data.
+
+> **Please note:** ISO-8601 format is identified in PHP by the [ATOM](http://php.net/manual/en/class.datetime.php#datetime.constants.atom) constant, even though there is a PHP [ISO8601](http://php.net/manual/en/class.datetime.php#datetime.constants.iso8601) constant.
 
 #### Built In Parameterized Types
 
