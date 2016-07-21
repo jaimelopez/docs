@@ -54,7 +54,7 @@ The following simple types are supported:
 - `date`: Date in ISO-8601* format.
 - `blob`: Base64 encoded 8-bit binary data.
 
-* ISO-8601 format is identified in PHP by the [ATOM](http://php.net/manual/en/class.datetime.php#datetime.constants.atom) constant, even though there is a PHP [ISO8601](http://php.net/manual/en/class.datetime.php#datetime.constants.iso8601) constant.
+> **Please note:** ISO-8601 format is identified in PHP by the [ATOM](http://php.net/manual/en/class.datetime.php#datetime.constants.atom) constant, even though there is a PHP [ISO8601](http://php.net/manual/en/class.datetime.php#datetime.constants.iso8601) constant.
 
 #### Built In Parameterized Types
 
