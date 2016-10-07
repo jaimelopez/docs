@@ -2,16 +2,23 @@
 .site-header {
    background: #ef672f;
    height: 66px;
-   overflow: hidden;
    position: relative;
    z-index: 50;
+
+   @media (max-width:767px) {
+      overflow: hidden;
+   }
 }
 
 .site-header .logo {
    width: 155px;
    height: 66px;
    float: left;
+<<<<<<< Updated upstream:theme/scss/partials/_site-header.scss
    background: #c14800 url(../images/magento_logo.svg) center center no-repeat;
+=======
+   background: #c14800 url(../i/magento_logo.svg) center center no-repeat;
+>>>>>>> Stashed changes:theme/_scss/partials/_site-header.scss
 }
 
 .site-header .sub-site-name {

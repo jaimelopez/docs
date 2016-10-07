@@ -1,44 +1,48 @@
-            </div>
-        </div>
-    </div>
+
+		</div>
+		</div>
+	</div>
+
+
 </div>
+<!-- -->
+<!--Global footer-->
 <div id="footer-wrap">
     <div class="footer">
         <div id="magento-com">
-            <div class="intro-paragraph">
-                <div class="container">
-                    <a href="http://www.magento.com/"><img src="{{ site.baseurl }}/theme/images/magento_logo_footer.svg"
-                                                           alt="Magento an ebay inc company"/></a>
-                    <h3>eCommerce platform, solutions and services<br/> to help grow your business.</h3>
-                </div>
-            </div>
             <div class="container">
                 <div id="f-col-1">
-                    <h4>Learn more</h4>
-                    <ul class="nav" style="margin-bottom: 40px;">
-                        <li><a href="http://magento.com/company/about-us" title="Company">Company</a></li>
+                    <a href="http://www.magento.com/">
+                        <img src="{{ site.baseurl }}/theme/images/magento_logo_footer.svg" alt="Magento Commerce" style="width: 190px;" />
+                    </a>
+                    <ul class="nav">
+                        <li><a href="http://magento.com/company/about-us" title="Company">About Us</a></li>
                         <li><a href="http://magento.com/company/careers" title="Careers">Careers</a></li>
                         <li><a href="http://magento.com/company/press-room" title="Press Room">Press Room</a></li>
+                        <li><a href="http://magento.com/company/leadership" title="Leadership">Leadership</a></li>
                     </ul>
                 </div>
                 <div id="f-col-2">
-                    <div id="social-network">
-                        <h4>Find us on</h4>
-                        <ul>
-                            <li><a class="btn-facebook" target="_blank" href="http://www.facebook.com/magento">Magento
-                                Facebook</a>
-                            </li>
-                            <li><a class="btn-twitter" target="_blank" href="https://twitter.com/magento">Magento
-                                Twitter</a></li>
-                            <li><a class="btn-lnkdn" target="_blank"
-                                   href="http://www.linkedin.com/groups?home=&amp;gid=146360&amp;trk=anet_ug_hm">Magento
-                                Linkedin</a></li>
-                            <li><a class="btn-gplus" target="_blank" href="https://plus.google.com/+magento/posts">Magento
-                                Google+</a></li>
-                            <li><a class="btn-youtube" target="_blank"
-                                   href="http://www.youtube.com/user/magentocommerce/featured">Magento
-                                Youtube</a></li>
-                        </ul>
+                    <div id="f-col-2-1">
+                        <div class="contact-us">
+                            <h4>Get in touch</h4>
+                            <p>We'd like to hear from you! Call us, <br />send us an email or talk to sales.</p>
+                            <a href="http://magento.com/company/contact-us" class="btn large copper">Contact Us</a>
+                        </div>
+                    </div>
+                    <div id="f-col-2-2">
+                        <div id="social-network">
+                            <h4>Stay Connected</h4>
+                            <ul>
+                                <li><a class="btn-facebook" target="_blank" href="http://www.facebook.com/magento">Magento Facebook</a>
+                                </li>
+                                <li><a class="btn-twitter" target="_blank" href="https://twitter.com/magento">Magento Twitter</a></li>
+                                <li><a class="btn-lnkdn" target="_blank" href="http://www.linkedin.com/groups?home=&amp;gid=146360&amp;trk=anet_ug_hm">Magento Linkedin</a></li>
+                                <li><a class="btn-gplus" target="_blank" href="https://plus.google.com/+magento/posts">Magento Google+</a></li>
+                                <li><a class="btn-youtube" target="_blank" href="http://www.youtube.com/user/magentocommerce/featured">Magento
+                                    Youtube</a></li>
+                            </ul>
+                        </div>
                     </div>
                 </div>
                 <div id="f-col-3">
@@ -49,19 +53,14 @@
                             <div id="nws-notsubscribed">
                                 <div id="sb-email" class="sb-email">
                                     <form method="post" enctype="application/x-www-form-urlencoded"
-                                          action="//info2.magento.com/index.php/leadCapture/save" id="mktForm_1182"
-                                          class="mktform"
+                                          action="//info2.magento.com/index.php/leadCapture/save" id="mktForm_1182" class="mktform"
                                           name="mktForm_1182" onsubmit="return validateForm();">
-                                        <input class="fValidate['email'] input-topbg sb-email-input" name="Email"
-                                               id="Email"
-                                               placeholder="Email Address">
-                                        <input type="hidden" name="formid" value="1182"/>
+                                        <input class="fValidate['email'] input-topbg sb-email-input" name="Email" id="Email"
+                                               placeholder="email address">
+                                        <input type="hidden" name="formid" value="1182" />
                                         <button type="submit" class="sb-icon-submit btn outline">
-                                            Submit
+                                            Sign Up
                                         </button>
-          <span class="sb-icon-email btn outline">
-              Sign Up
-          </span>
                                     </form>
                                 </div>
                             </div>
@@ -75,28 +74,53 @@
                         </div>
                     </div>
                 </div>
-                <div id="f-col-4">
-                    <div class="contact-us">
-                        <h4>Get in touch</h4>
-                        <p>We'd like to hear from you! Call us, <br/>send us an email or talk to sales.</p>
-                        <a href="http://magento.com/company/contact-us" class="btn btn-outline">Contact Us</a>
-                    </div>
-                </div>
             </div>
         </div>
     </div>
     <div id="copyright">
         <div class="container">
+            <div class="copyright-date">&copy; {{ site.time | date: '%Y' }} Magento, Inc. All rights reserved.</div>
             <div class="copyright-links">
                 <ul class="nav">
                     <li><a title="Privacy Policy" href="http://magento.com/legal/terms/privacy">Privacy Policy</a></li>
                     <li><a title="Terms of Service" href="http://magento.com/legal/terms">Terms of Service</a></li>
-                    <li><a title="License/Trademark FAQ" href="http://magento.com/legal/licensing">License/Trademark
-                        FAQ</a></li>
+                    <li><a title="License/Trademark FAQ" href="http://magento.com/legal/licensing">License/Trademark FAQ</a></li>
                 </ul>
             </div>
-            <div class="copyright-date">&copy; {{ site.time | date: '%Y' }} Magento, Inc. All rights reserved.</div>
         </div>
     </div>
+</div>
+
+<script src="https://code.jquery.com/jquery-2.1.1.min.js"></script>
+<script src="{{ site.baseurl }}/theme/js/jsCookie.js"></script>
+<script src="{{ site.baseurl }}/theme/js/devdocs.js"></script>
+<script src="{{ site.baseurl }}/theme/js/jquery-ui.min.js"></script>
+
+<script type="text/javascript">
+    (function() {
+        var didInit = false;
+        function initMunchkin() {
+            if(didInit === false) {
+                didInit = true;
+                Munchkin.init('585-GGD-959', {cookieAnon: false});
+            }
+        }
+        var s = document.createElement('script');
+        s.type = 'text/javascript';
+        s.async = true;
+        s.src = '//munchkin.marketo.net/munchkin.js';
+        s.onreadystatechange = function() {
+            if (this.readyState == 'complete' || this.readyState == 'loaded') {
+                initMunchkin();
+            }
+        };
+        s.onload = initMunchkin;
+        document.getElementsByTagName('head')[0].appendChild(s);
+    })();
+</script>
+
+<script src="{{ site.baseurl }}/theme/js/app.js"></script>
+
+
 </body>
 </html>

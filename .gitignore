@@ -1,3 +1,6 @@
 /_site/
 /vendor/
 /node_modules/
+.sass-cache/
+theme/css/
+
