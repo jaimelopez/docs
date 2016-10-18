@@ -7,6 +7,8 @@ markdown_ext: "markdown,mkdown,mkdn,mkd,md"
 markdown: kramdown
 highlighter: rouge
 incremental: true
-exclude: ['scss','bin','node_modules']
 githuburl: https://github.com/magento-mcom/docs/tree/gh-pages/
 specificationurl: https://magento-mcom.github.io/shared-services-internal/specification.json
+sass:
+  sass_dir: theme/_scss/
+  style: compressed
