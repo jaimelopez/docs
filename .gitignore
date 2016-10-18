@@ -2,6 +2,6 @@
 /.sass-cache/
 /vendor/
 /.bundle/
-Gemfile.lock
+/Gemfile.lock
 /.jekyll-metadata
 
