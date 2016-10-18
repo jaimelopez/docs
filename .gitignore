@@ -1,4 +1,7 @@
 /_site/
-.sass-cache/
-theme/css/
+/.sass-cache/
+/vendor/
+/.bundle/
+/Gemfile.lock
+/.jekyll-metadata
 
