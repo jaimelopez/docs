@@ -55,10 +55,10 @@ For example, one such specification defines the JSON encoding rules of data enti
 The documents that make up the Magento Shared Service definitions are as follows:
 
 - Core Specifications
-  - [Overview](overview.md) (this document) – introduces the basic concepts and terminology, and provides references to other more detailed speciations.
-  - [Service Specification Language](service-specification-language.md) – covers how service specifications are defined in XML.
+  - [Overview]() (this document) – introduces the basic concepts and terminology, and provides references to other more detailed speciations.
+  - [Service Specification Language](service-specification-language.html) – covers how service specifications are defined in XML.
 - Layer 2 Specifications
-  - [Core Service Interaction Flows](core-service-interaction-flows.md) – these show how common commerce operations map to a series of service requests. For example, a user making a purchase on a web store that flows through to an order management system would involve order creation and payment service interactions.
+  - [Core Service Interaction Flows](core-service-interaction-flows.html) – these show how common commerce operations map to a series of service requests. For example, a user making a purchase on a web store that flows through to an order management system would involve order creation and payment service interactions.
   - Core Service Specifications – these define specific services used as part of an overall interaction. Software systems implement one or more services. These specifications are encoded in machine readable form (XML).
 - Layer 1 Specifications
-  - [Core Transport Bindings](core-transport-bindings.md) – these define standard ways in how technologies such as HTTP and AMQP can be used to transport commands, queries, and events between clients and services.
+  - [Core Transport Bindings](core-transport-bindings.html) – these define standard ways in how technologies such as HTTP and AMQP can be used to transport commands, queries, and events between clients and services.
