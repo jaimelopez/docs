@@ -1,7 +1,7 @@
 ---
 layout: default
 title: Service Interaction Flows
-menu_title: Service Intractions
+menu_title: Service Interactions
 menu_order: 3
 group: integration
 github_link: integration/core-service-interaction-flows.md
