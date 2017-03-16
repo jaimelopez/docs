@@ -21,7 +21,7 @@ New products are created by the `magento.catalog.update` command. This command i
 
 ### Deleting a Product
 
-Deleting a product is similar to creating/updating a product. A client sends a `magento.catalog.delete` request to the `magento.catalog.catalog_magement` service. If successful, the server broadcasts a `magento.catalog.deleted` event notification.
+Deleting a product is similar to creating/updating a product. A client sends a `magento.catalog.delete` request to the `magento.catalog.catalog_management` service. If successful, the server broadcasts a `magento.catalog.deleted` event notification.
 
 ## Orders
 
@@ -31,7 +31,7 @@ Consider a Magento Digital Commerce (MDC) online web store connected to Magento 
 
 1. A user browses the online store, adding items to a cart, and finally checking out with the cart.
 2. Consumer makes an purchase using one or more payments modules. A payment reference is returned by the payment service. (This could be a “token” or a simpler reference, depending on the service.)
-3. MDC sends the order with payment reference to MCOM. `magento.order_service.create_order(order, payment reference)`
+3. MDC sends the order with payment reference to MCOM. `magento.order_service.create_order(order, payment_reference)`
 4. MCOM verifies the order with the payment service to verify the payment has been processed. `magento.payment_service.validate_payment(payment_reference)`
 5. TODO etc.
 
