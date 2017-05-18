@@ -227,7 +227,14 @@ github_link: specification/index.html
     <ul class="{{className}}">
         {{#each properties}}
         <li>
-            <div><span class="property-name">{{name}}</span> ({{type type}}) - {{summary}}</div>
+            <div>
+                <span class="property-name">
+                    {{name}}
+                    {{#if required }}
+                        <b class="property-required">*</b>
+                    {{/if}}
+                </span> ({{type type}}) - {{summary}}
+            </div>
             {{ type-tree type ../used }}
         </li>
         {{/each}}

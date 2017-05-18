@@ -38,6 +38,12 @@ pre.example {
   border-bottom: 1px dotted #666666;
 }
 
+.specification .property-required {
+  color: #c14800;
+  font-size: 14px;
+  margin-left: -3px;
+}
+
 .specification ul.arguments li {
   margin: 0;
 }
